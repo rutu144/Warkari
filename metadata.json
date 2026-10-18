@@ -1,0 +1,6 @@
+{
+  "name": "Warkari",
+  "description": "Unified digital platform connecting pilgrims, cultural event organizers, temples, Mandals, and essential services for Maharashtra Wari, Ganpati, and Yatras.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

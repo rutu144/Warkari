@@ -1,0 +1,11 @@
+{
+  "name": "warkari",
+  "version": "1.0.0",
+  "description": "Warkari - Maharashtra Pilgrimages and Cultural Events Platform",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  }
+}

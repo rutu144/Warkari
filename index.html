@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Warkari — Maharashtra Pilgrimages & Cultural Events</title>
+  <meta name="description" content="Unified digital platform connecting pilgrims, cultural event organizers, temples, Mandals, and essential services for Maharashtra Wari, Ganpati, and Yatras.">
+  <meta property="og:title" content="Warkari — Maharashtra Pilgrimages & Cultural Events">
+  <meta property="og:description" content="Unified digital platform connecting pilgrims, cultural event organizers, temples, Mandals, and essential services for Maharashtra Wari, Ganpati, and Yatras.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --saffron-primary: #E65100;
+      --saffron-secondary: #FF8F00;
+      --saffron-container: #FFE0B2;
+      --maroon-primary: #7A141A;
+      --maroon-dark: #4A080C;
+      --gold-accent: #D4AF37;
+      --gold-muted: #C59B27;
+      --ivory-bg: #FDFBF7;
+      --ivory-surface: #FFFFFF;
+      --ivory-variant: #F5EFE6;
+      --text-primary: #261E1A;
+      --text-secondary: #6B5E55;
+      --text-muted: #9E9188;
+      --urgent-red: #C62828;
+      --verified-green: #2E7D32;
+      --live-red: #D32F2F;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body {
+      font-family: 'Plus Jakarta Sans', 'Mukta', system-ui, sans-serif;
+      background: #1A1410;
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Mobile Device Frame */
+    .app-viewport {
+      width: 100%;
+      max-width: 480px;
+      height: 100vh;
+      background: var(--ivory-bg);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+
+    @media (min-width: 600px) {
+      .app-viewport {
+        height: 94vh;
+        border-radius: 28px;
+        border: 8px solid #2C221B;
+      }
+    }
+
+    /* Top Devotional Header */
+    .warkari-topbar {
+      background: var(--saffron-primary);
+      color: white;
+      padding: 12px 16px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(230, 81, 0, 0.25);
+      z-index: 20;
+    }
+
+    .topbar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .om-badge {
+      width: 32px;
+      height: 32px;
+      background: var(--gold-accent);
+      color: var(--maroon-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 18px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+
+    .marathi-pill {
+      background: var(--maroon-primary);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 4px;
+    }
+
+    .brand-slogan {
+      font-size: 10px;
+      color: rgba(255,255,255,0.9);
+      margin-top: 3px;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pill-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 16px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+    .pill-btn:hover { background: rgba(255, 255, 255, 0.35); }
+    .pill-btn.role-pill { background: var(--maroon-primary); color: var(--gold-accent); }
+
+    /* Location Bar */
+    .location-selector-bar {
+      margin-top: 10px;
+      background: white;
+      color: var(--text-primary);
+      border-radius: 8px;
+      padding: 6px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    }
+
+    .loc-label { font-size: 10px; color: var(--text-secondary); }
+    .loc-val { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+
+    /* Scrollable Screen Content */
+    .screen-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px;
+      padding-bottom: 90px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--ivory-surface);
+      border: 1px solid #EAE3D9;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      overflow: hidden;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .card:active { transform: scale(0.99); }
+
+    /* Welcome Banner */
+    .welcome-card {
+      background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+      border: 1px solid rgba(230,81,0,0.25);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .welcome-icon {
+      font-size: 26px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--saffron-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* Horizontal Carousels */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .section-link {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--saffron-primary);
+      cursor: pointer;
+    }
+
+    .carousel-row {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .carousel-row::-webkit-scrollbar { display: none; }
+
+    /* Live Card */
+    .live-stream-card {
+      min-width: 210px;
+      max-width: 210px;
+      background: white;
+      border-radius: 10px;
+      border: 1px solid #E5D9CB;
+      overflow: hidden;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .live-card-thumb {
+      background: #1F1713;
+      height: 80px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 6px 8px;
+    }
+    .live-badge {
+      background: var(--live-red);
+      color: white;
+      font-size: 8px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 3px;
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .pulse-dot { width: 6px; height: 6px; background: white; border-radius: 50%; animation: pulse 1.2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+    /* Filter Chips */
+    .filter-chips-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+    .filter-chips-row::-webkit-scrollbar { display: none; }
+    .chip {
+      background: white;
+      border: 1px solid #D8CFC4;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-primary);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .chip.active {
+      background: var(--saffron-primary);
+      color: white;
+      border-color: var(--saffron-primary);
+    }
+
+    /* Event Card */
+    .event-card {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+    .event-banner {
+      height: 90px;
+      padding: 10px 12px;
+      color: white;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .event-card-body { padding: 12px; }
+
+    /* Verification Badge */
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #E8F5E9;
+      color: var(--verified-green);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 10px;
+      border: 1px solid rgba(46,125,50,0.3);
+    }
+
+    /* Quick Service Grid */
+    .quick-service-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .service-btn {
+      background: white;
+      border: 1px solid #E5DCCF;
+      border-radius: 10px;
+      padding: 8px 4px;
+      text-align: center;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .service-btn .icon-box {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    .service-btn .title { font-size: 11px; font-weight: 700; color: var(--text-primary); }
+    .service-btn .sub { font-size: 9px; color: var(--text-secondary); }
+
+    /* Emergency Strip */
+    .emergency-strip {
+      background: #FFF3E0;
+      border: 1px solid #FFE0B2;
+      border-radius: 8px;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--maroon-primary);
+      font-weight: 600;
+    }
+
+    /* Prototype Notice */
+    .prototype-notice {
+      background: rgba(122, 20, 26, 0.06);
+      border: 1px solid rgba(122, 20, 26, 0.2);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 11px;
+      color: var(--maroon-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1.4;
+    }
+
+    /* Bottom Navigation Bar */
+    .bottom-nav {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background: var(--ivory-surface);
+      border-top: 1px solid #E8E0D5;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 30;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.04);
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      font-size: 11px;
+      font-weight: 600;
+      width: 20%;
+      border: none;
+      background: none;
+      padding: 6px 0;
+      transition: all 0.2s;
+    }
+    .nav-item.active {
+      color: var(--saffron-primary);
+      font-weight: 800;
+    }
+    .nav-icon { font-size: 20px; line-height: 1; }
+
+    /* Modal / Dialog */
+    .modal-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 100;
+      backdrop-filter: blur(2px);
+    }
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 400px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3);
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: var(--saffron-primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn-secondary {
+      background: var(--ivory-variant);
+      color: var(--text-primary);
+      border: 1px solid #D8CFC4;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-weight: 600;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    /* Forms */
+    .form-group { display: flex; flex-direction: column; gap: 4px; }
+    .form-label { font-size: 11px; font-weight: 600; color: var(--text-secondary); }
+    .form-input {
+      padding: 8px 12px;
+      border: 1px solid #D8CFC4;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+    }
+    .form-input:focus { outline: none; border-color: var(--saffron-primary); }
+
+    /* Radar Simulation */
+    .radar-box {
+      width: 100%;
+      height: 240px;
+      background: #231C16;
+      border-radius: 12px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .radar-ring {
+      border: 1px solid rgba(255, 143, 0, 0.25);
+      border-radius: 50%;
+      position: absolute;
+    }
+    .radar-pin {
+      position: absolute;
+      background: var(--maroon-primary);
+      color: white;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      border: 1.5px solid rgba(255,255,255,0.7);
+      transition: transform 0.2s;
+    }
+    .radar-pin:hover { transform: scale(1.1); background: var(--gold-accent); color: var(--maroon-dark); }
+    .radar-pin.active { background: var(--gold-accent); color: var(--maroon-dark); border-color: white; }
+
+    /* Toast */
+    .toast-msg {
+      position: absolute;
+      bottom: 74px;
+      left: 16px;
+      right: 16px;
+      background: #2B211A;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      z-index: 90;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      animation: slideUp 0.25s ease-out;
+    }
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    /* APK Download Banner */
+    .apk-banner {
+      background: linear-gradient(90deg, #1B5E20, #2E7D32);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-viewport" id="app">
+    <!-- Top Devotional Bar -->
+    <header class="warkari-topbar">
+      <div class="topbar-header">
+        <div class="brand-group">
+          <div class="om-badge">ॐ</div>
+          <div>
+            <div style="display:flex; align-items:center;">
+              <span class="brand-title">WARKARI</span>
+              <span class="marathi-pill">वारकरी</span>
+            </div>
+            <div class="brand-slogan">Maharashtra Pilgrimages • Mandals • Seva</div>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button class="pill-btn" onclick="toggleLanguage()" id="langBtn">
+            🌐 <span id="currentLangText">English</span>
+          </button>
+          <button class="pill-btn role-pill" onclick="cycleRole()" id="roleBtn">
+            👤 <span id="currentRoleText">Pilgrim</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- City Selector -->
+      <div class="location-selector-bar" onclick="openCityModal()">
+        <div>
+          <div class="loc-label">Pilgrimage / Festival Region:</div>
+          <div class="loc-val" id="selectedCityText">All Maharashtra (Pandharpur, Pune, Mumbai)</div>
+        </div>
+        <span style="font-size: 18px; color: var(--text-secondary);">▼</span>
+      </div>
+    </header>
+
+    <!-- Main Screens Container -->
+    <main class="screen-container" id="screenContent">
+      <!-- Injected by JavaScript based on current tab -->
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" onclick="switchTab('home')" id="nav-home">
+        <span class="nav-icon">🚩</span>
+        <span>Home</span>
+      </button>
+      <button class="nav-item" onclick="switchTab('discover')" id="nav-discover">
+        <span class="nav-icon">🔍</span>
+        <span>Discover</span>
+      </button>
+      <button class="nav-item" onclick="switchTab('map')" id="nav-map">
+        <span class="nav-icon">📍</span>
+        <span>Map</span>
+      </button>
+      <button class="nav-item" onclick="switchTab('live')" id="nav-live">
+        <span class="nav-icon">📺</span>
+        <span>Live</span>
+      </button>
+      <button class="nav-item" onclick="switchTab('profile')" id="nav-profile">
+        <span class="nav-icon">👤</span>
+        <span>Profile</span>
+      </button>
+    </nav>
+
+    <!-- Toast Notifications -->
+    <div id="toastBox" style="display:none;" class="toast-msg"></div>
+
+    <!-- Modals Container -->
+    <div id="modalBox" style="display:none;" class="modal-overlay"></div>
+  </div>
+
+  <script>
+    // App State
+    const state = {
+      tab: 'home',
+      subScreen: null, // 'detail', 'stayfood', 'marketplace', 'social', 'organizer'
+      city: 'All Maharashtra',
+      lang: 'English',
+      role: 'Devotee / Pilgrim',
+      savedEventIds: new Set(['w1', 'g1']),
+      followedOrgIds: new Set(['Sant Tukaram Maharaj Sansthan, Dehu']),
+      chantCount: 108,
+      searchQuery: '',
+      selectedCategory: null,
+      onlyVerified: false,
+      selectedEvent: null,
+      selectedLocation: null,
+      selectedStreamId: 'live_pandharpur',
+      stayTab: 0,
+      marketTab: 0
+    };
+
+    // Realistic Sample Datasets
+    const events = [
+      {
+        id: 'w1',
+        titleEn: 'Sant Tukaram Maharaj Palkhi Sohla (Ashadhi Wari 2026)',
+        titleMr: 'जगद्गुरु संत तुकाराम महाराज पालखी सोहळा (आषाढी वारी)',
+        category: 'Wari & Palkhi',
+        city: 'Pandharpur & Route',
+        venue: 'Sant Tukaram Maharaj Sansthan Dehu to Shri Vitthal Mandir',
+        address: 'Dehu - Akurdi - Pune - Saswad - Lonand - Phaltan - Pandharpur',
+        dates: '22 June 2026 – 12 July 2026',
+        timings: '05:00 AM – 09:30 PM Daily',
+        organizer: 'Sant Tukaram Maharaj Sansthan, Dehu',
+        isVerified: true,
+        savesCount: 3840,
+        hasLive: true,
+        descEn: 'The sacred pilgrimage walking from Dehu to Pandharpur carrying the divine Padukas with thousands of singing Warkaris, disciplined Dindis, tal and mridanga.',
+        descMr: 'देहू ते पंढरपूर पायी पालखी सोहळा. लाखो वारकरी टाळ-मृदुंगाच्या गजरात आणि ज्ञानोबा-तुकाराम नामाच्या जयघोषात पंढरीकडे प्रस्थान करतात.',
+        schedule: [
+          { time: '05:00 AM', title: 'Kakad Aarti & Paduka Snan', desc: 'Daily holy morning prayers at Palkhi pandal' },
+          { time: '06:30 AM', title: 'Prasthan (Dindi March Begins)', desc: 'Marching in 327 serial registered Dindis' },
+          { time: '12:30 PM', title: 'Duparcha Visawa & Mahaprasad', desc: 'Free hot lunch served by local villagers' },
+          { time: '07:30 PM', title: 'Samaj Aarti & Haripath', desc: 'Collective evening prayers at night camp' }
+        ],
+        announcements: [
+          { title: 'Emergency Medical Tents at Dive Ghat', time: 'Today 08:30 AM', urgent: true, desc: '108 ambulances and drinking water tankers active.' },
+          { title: 'Dindi Queue Tokens at Pandharpur', time: 'Yesterday', urgent: false, desc: 'Free token registration near Wakhari entrance.' }
+        ]
+      },
+      {
+        id: 'w2',
+        titleEn: 'Sant Dnyaneshwar Maharaj Palkhi Sohla (Alandi to Pandharpur)',
+        titleMr: 'संत श्रेष्ठ ज्ञानेश्वर माऊली पालखी सोहळा (आळंदी ते पंढरपूर)',
+        category: 'Wari & Palkhi',
+        city: 'Alandi & Pandharpur',
+        venue: 'Alandi Devasthan Sansthan Parisar',
+        address: 'Alandi - Pune - Dive Ghat - Jejuri - Pandharpur',
+        dates: '24 June 2026 – 12 July 2026',
+        timings: '04:30 AM – 10:00 PM',
+        organizer: 'Alandi Devasthan Sansthan',
+        isVerified: true,
+        savesCount: 4210,
+        hasLive: true,
+        descEn: 'Palkhi procession of Mauli Dnyaneshwar Maharaj moving across Pune, Dive Ghat, Jejuri, Taradgaon, and Vakhari with historic Ringan ceremonies at Velapur.',
+        descMr: 'आळंदी ते पंढरी पायी वारी. माऊलींच्या पादुकांचा नयनरम्य सोहळा आणि वेलापूर येथील प्रसिद्ध रिंगण सोहळा.',
+        schedule: [
+          { time: '05:00 AM', title: 'Morning Abhishek & Puja', desc: 'Devasthan inner sanctum Snan' },
+          { time: '04:00 PM', title: 'Ashwa Ringan Ceremony', desc: 'Sacred horse circular run ritual at Velapur' }
+        ],
+        announcements: [
+          { title: 'Drinking Water Supply Points', time: 'Today 06:00 AM', urgent: false, desc: 'Continuous RO tankers every 2km along the highway.' }
+        ]
+      },
+      {
+        id: 'g1',
+        titleEn: 'Shrimant Dagdusheth Halwai Ganpati Ganeshotsav 2026',
+        titleMr: 'श्रीमंत दगडूशेठ हलवाई गणपती उत्सव २०२६ (पुणे)',
+        category: 'Ganpati Mandal',
+        city: 'Pune',
+        venue: 'Ganpati Bhavan, Budhwar Peth, Shivaji Road, Pune',
+        address: 'Shivaji Road, Pune 411002',
+        dates: '15 September 2026 – 25 September 2026',
+        timings: '06:00 AM – 12:00 AM (Midnight)',
+        organizer: 'Shrimant Dagdusheth Halwai Public Ganpati Trust',
+        isVerified: true,
+        savesCount: 5890,
+        hasLive: true,
+        descEn: 'Centenary celebration featuring grand replica of Somnath Temple pandal and Atharvashirsha mass chanting by 31,000 women on Rishi Panchami.',
+        descMr: 'पुण्यातील ऐतिहासिक व मानाचा गणेशोत्सव. भव्य सोमनाथ मंदिर देखावा आणि ऋषिपंचमी रोजी ३१,००० महिलांचे अथर्वशीर्ष पठण.',
+        schedule: [
+          { time: '06:00 AM', title: 'Mangal Aarti & Suprabhat', desc: 'Early morning traditional aarti' },
+          { time: '06:00 AM (Day 2)', title: 'Rishi Panchami Mass Chanting', desc: '31,000 women collective recital' }
+        ],
+        announcements: [
+          { title: 'Senior Citizen Queue Access', time: 'Today 10:00 AM', urgent: false, desc: 'Senior citizens enter via Gate 3 with valid ID.' }
+        ]
+      },
+      {
+        id: 'g2',
+        titleEn: 'Lalbaugcha Raja Sarvajanik Ganeshotsav',
+        titleMr: 'लालबागचा राजा सार्वजनिक गणेशोत्सव (मुंबई)',
+        category: 'Ganpati Mandal',
+        city: 'Mumbai',
+        venue: 'Lalbaug Market, GD Ambekar Marg, Mumbai',
+        address: 'Lalbaug Market, Parel, Mumbai 400012',
+        dates: '15 September 2026 – 25 September 2026',
+        timings: '24 Hours Round the Clock',
+        organizer: 'Lalbaugcha Raja Sarvajanik Mandal',
+        isVerified: true,
+        savesCount: 9400,
+        hasLive: true,
+        descEn: 'World-famous wish-fulfilling deity of Mumbai with iconic Navas queue and historic immersion procession at Girgaon Chowpatty.',
+        descMr: 'नवसाला पावणारा मुंबईचा लाडका लालबागचा राजा. चरणस्पर्श आणि मुखदर्शन रांगा आणि भव्य विसर्जन सोहळा.',
+        schedule: [
+          { time: '12:30 PM', title: 'Maha Aarti', desc: 'Afternoon grand collective aarti' },
+          { time: '08:30 PM', title: 'Sandhya Aarti', desc: 'Celebrity and public darshan prayer' }
+        ],
+        announcements: [
+          { title: 'Free Footwear Deposit Counters', time: 'Yesterday', urgent: false, desc: 'Available at Cotton Green ground entrance.' }
+        ]
+      },
+      {
+        id: 'k1',
+        titleEn: 'Nashik-Trimbakeshwar Kumbh Parvani & Godavari Aarti',
+        titleMr: 'नाशिक-त्र्यंबकेश्वर कुंभपर्वणी व गोदावरी महाआरती',
+        category: 'Kumbh Mela',
+        city: 'Nashik & Trimbakeshwar',
+        venue: 'Ramkund Nashik & Kushavarta Kund Trimbakeshwar',
+        address: 'Panchavati, Nashik / Trimbakeshwar Jyotirlinga',
+        dates: '01 October 2026 – 15 November 2026',
+        timings: '03:30 AM – 11:00 PM',
+        organizer: 'Nashik Municipal Corporation & Akhada Parishad',
+        isVerified: true,
+        savesCount: 3120,
+        hasLive: true,
+        descEn: 'Holy dip at Ramkund and Kushavarta Kund. Akhada Peshwai procession of Sadhus and Mahants with evening Godavari Deepotsav.',
+        descMr: 'रामकुंड व कुशावर्त तीरावर शाही स्नान पर्वणी. साधु-संतांची पेशवाई मिरवणूक आणि भव्य गोदावरी दीप प्रज्वलन.',
+        schedule: [
+          { time: '04:00 AM', title: 'Shahi Snan (Royal Dip)', desc: 'Sacred river dip for Akhadas and pilgrims' },
+          { time: '07:00 PM', title: 'Godavari Maha Aarti', desc: '108 lamps river bank grand deepotsav' }
+        ],
+        announcements: [
+          { title: 'Free Tapovan Shuttle Buses', time: 'Today 07:00 AM', urgent: true, desc: 'Buses run every 10 minutes to Ramkund.' }
+        ]
+      }
+    ];
+
+    const liveStreams = [
+      { id: 'live_pandharpur', temple: 'Shri Vitthal Rukmini Mandir', event: 'Ashadhi Ekadashi 24x7 Darshan', organizer: 'Mandir Samiti (Official)', chant: 'विठ्ठल विठ्ठल जय हरी विठ्ठल', viewers: 14250, isLive: true, schedule: 'Daily Kakad: 04:00 AM | Naivedya: 12:00 PM | Shej: 11:00 PM' },
+      { id: 'live_dagdusheth', temple: 'Shrimant Dagdusheth Halwai Ganpati', event: 'Ganesh Chaturthi Utsav 2026', organizer: 'Trust Media Cell', chant: 'गणपती बाप्पा मोरया, मंगलमूर्ती मोरया', viewers: 28400, isLive: true, schedule: 'Maha Aarti: 07:30 AM & 09:00 PM Daily' },
+      { id: 'live_lalbaug', temple: 'Lalbaugcha Raja Pandal, Mumbai', event: 'Navas & Charan Sparsh Darshan', organizer: 'Lalbaugcha Raja Cell', chant: 'बोला गणपती बाप्पा मोरया', viewers: 45900, isLive: true, schedule: '24 Hours Continuous Authorized Stream' },
+      { id: 'live_nashik', temple: 'Trimbakeshwar Jyotirlinga & Ramkund', event: 'Godavari Maha Aarti Live', organizer: 'Trimbak Sansthan', chant: 'हर हर महादेव, जय गोदावरी', viewers: 0, isLive: false, schedule: 'Next Live broadcast begins at 06:30 PM (Evening Aarti)' }
+    ];
+
+    const locations = [
+      { id: 'l1', nameEn: 'Shri Vitthal Rukmini Mandir', nameMr: 'श्री विठ्ठल रुक्मिणी मंदिर', type: 'Temple / Mandal', distance: '0.4 km', address: 'Pradakshina Marg, Pandharpur', isFree: false, crowd: 'Very High', phone: '02186-224466' },
+      { id: 'l2', nameEn: 'Mauli Annakshetra (Free Bhandara)', nameMr: 'माऊली अन्नछत्र (मोफत महाप्रसाद)', type: 'Free Bhandara / Food', distance: '0.6 km', address: 'Chandrabhaga Ghat Road', isFree: true, crowd: 'High', phone: '9822100000' },
+      { id: 'l3', nameEn: 'Tanpure Maharaj Math Dharamshala', nameMr: 'तनपुरे महाराज मठ धर्मशाळा', type: 'Dharamshala / Stay', distance: '0.8 km', address: 'Station Road, Pandharpur', isFree: false, crowd: 'Moderate', phone: '02186-223400' },
+      { id: 'l4', nameEn: 'Emergency 108 Medical Tent', nameMr: 'तातडीची वैद्यकीय मदत केंद्र', type: '24x7 Medical Tent', distance: '1.2 km', address: 'Wakhari Phata, Pandharpur', isFree: true, crowd: 'Low', phone: '108' },
+      { id: 'l5', nameEn: 'Municipal RO Drinking Water Tanker', nameMr: 'पिण्याच्या पाण्याचा टँकर', type: 'Drinking Water Point', distance: '0.2 km', address: 'Namdev Payatha Chowk', isFree: true, crowd: 'Moderate', phone: '1800-233-1234' }
+    ];
+
+    const accommodations = [
+      { name: 'Shri Vitthal Bhakt Niwas (Temple Trust)', type: 'Dharamshala', price: '₹150 / bed (Subsidized)', beds: 42, facilities: ['Purified RO Water', 'Mattresses', 'Attached Bath', 'CCTV Security'], phone: '02186-224466' },
+      { name: 'Tanpure Maharaj Math Ashram', type: 'Ashram Bhakt Niwas', price: 'Voluntary Contribution / Seva', beds: 15, facilities: ['Dormitory Hall', 'Community Kitchen', 'Morning Bhajan'], phone: '02186-223400' },
+      { name: 'Sant Dnyaneshwar Bhakt Bhavan', type: 'Guest House', price: '₹350 / room', beds: 8, facilities: ['Double Bed', 'Geyser Water', 'Power Backup'], phone: '020-27185200' }
+    ];
+
+    const foodServices = [
+      { name: 'Vitthal Sansthan Mahaprasad Dining Hall', category: 'Free Mahaprasad (अन्नछत्र)', isFree: true, hours: '10:30 AM – 10:30 PM', desc: 'Hot satvik meals served continuously with reverence to all devotees.', phone: '02186-224466' },
+      { name: 'Dindi Amrut Tea & Poha Seva Stall', category: 'Free Breakfast Seva', isFree: true, hours: '05:00 AM – 10:30 AM', desc: 'Fresh poha and jaggery tea served to walking warkaris on highway.', phone: '9822456789' },
+      { name: 'Pandharpur Satvik Jowar Bhakri & Pithla', category: 'Local Eatery', isFree: false, hours: '07:00 AM – 11:00 PM', desc: 'Authentic jowar bhakri, thecha, and fresh buttermilk at nominal pricing.', phone: '9422011223' }
+    ];
+
+    const vendors = [
+      { name: 'Shri Vitthal Traditional Tulsi Mala Store', category: 'Puja Samagri', stall: 'Stall B-14', offer: '10% Seva discount for Dindi warkaris', items: ['Original Tulsi Mala', 'Brass Chiplya & Tal', 'Gopichandan Tika'], phone: '9822114455' },
+      { name: 'Mauli Famous Pandharpuri Pedha Sweets', category: 'Prasad Sweets', stall: 'Stall A-02', offer: 'Special 1kg travel gift pack', items: ['Khoa Malai Pedha', 'Dink Laddu for Warkaris'], phone: '9423098765' }
+    ];
+
+    const serviceProviders = [
+      { name: 'Shivshambho Waterproof Pandal & Stage', category: 'Pandal & Stage', price: '₹25,000 onwards', exp: '18 years serving Pune Ganpati & Palkhi halts', phone: '9822334455' },
+      { name: 'Divya Darshan HD Multi-Cam Live Streaming', category: 'Live Broadcast', price: '₹18,000 / session', exp: 'Official streaming for 40+ Mandals', phone: '9922001122' }
+    ];
+
+    const posts = [
+      { id: 'p1', author: 'Sant Tukaram Maharaj Sansthan', role: 'Official Sansthan', tag: '#AshadhiWari2026', likes: 1420, textEn: 'The holy Palkhi of Jagadguru Sant Tukaram Maharaj has safely arrived at Saswad camp. Harinaam kirtan in full progress. Ram Krishna Hari!', textMr: 'जगद्गुरु संत तुकाराम महाराज पालखी सोहळा सासवड मुक्कामी विसावला आहे. ज्ञानोबा माउली तुकाराम!', photo: 'Palkhi procession entering Saswad with traditional saffron Pataka flags and bullock cart.' },
+      { id: 'p2', author: 'Dagdusheth Halwai Ganpati Trust', role: 'Verified Mandal', tag: '#GaneshotsavPune', likes: 2890, textEn: 'Grand lighting decoration rehearsal completed for this year Somnath Temple pandal. Mukh Darshan gates open on Ganesh Chaturthi morning.', textMr: 'सोमनाथ मंदिराच्या प्रतिकृतीचे नयनरम्य विद्युत रोषणाईचे काम पूर्ण!', photo: 'Majestic Golden Pandal illuminated at night in Pune Budhwar Peth.' }
+    ];
+
+    // Functions
+    function showToast(msg) {
+      const box = document.getElementById('toastBox');
+      box.innerText = msg;
+      box.style.display = 'flex';
+      setTimeout(() => { box.style.display = 'none'; }, 2600);
+    }
+
+    function toggleSave(id) {
+      if (state.savedEventIds.has(id)) {
+        state.savedEventIds.delete(id);
+        showToast('Event removed from saved');
+      } else {
+        state.savedEventIds.add(id);
+        showToast('Event saved to your pilgrimage schedule');
+      }
+      renderScreen();
+    }
+
+    function toggleFollow(org) {
+      if (state.followedOrgIds.has(org)) {
+        state.followedOrgIds.delete(org);
+        showToast('Unfollowed Sansthan');
+      } else {
+        state.followedOrgIds.add(org);
+        showToast('Following ' + org + ' updates');
+      }
+      renderScreen();
+    }
+
+    function toggleLanguage() {
+      const langs = ['English', 'मराठी', 'हिन्दी'];
+      const next = langs[(langs.indexOf(state.lang) + 1) % langs.length];
+      state.lang = next;
+      document.getElementById('currentLangText').innerText = next;
+      showToast('Language changed to ' + next);
+      renderScreen();
+    }
+
+    function cycleRole() {
+      const roles = ['Devotee / Pilgrim', 'Organizer / Mandal', 'Local Vendor', 'Service Provider'];
+      const next = roles[(roles.indexOf(state.role) + 1) % roles.length];
+      state.role = next;
+      document.getElementById('currentRoleText').innerText = next.split(' ')[0];
+      showToast('Switched to ' + next + ' mode');
+      if (next.includes('Organizer')) {
+        state.subScreen = 'organizer';
+      }
+      renderScreen();
+    }
+
+    function switchTab(tabId) {
+      state.tab = tabId;
+      state.subScreen = null;
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      document.getElementById('nav-' + tabId).classList.add('active');
+      renderScreen();
+    }
+
+    function openEventDetail(event) {
+      state.selectedEvent = event;
+      state.subScreen = 'detail';
+      renderScreen();
+    }
+
+    function openModal(html) {
+      const m = document.getElementById('modalBox');
+      m.innerHTML = `<div class="modal-content">${html}</div>`;
+      m.style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('modalBox').style.display = 'none';
+    }
+
+    function openCityModal() {
+      const cities = ['All Maharashtra', 'Pandharpur', 'Pune', 'Mumbai', 'Nashik', 'Kolhapur', 'Alandi', 'Dehu'];
+      let html = `
+        <h3 style="font-size:16px; font-weight:800; color:var(--text-primary);">Select Pilgrimage Region</h3>
+        <p style="font-size:12px; color:var(--text-secondary);">Filter events, mandals, and seva along your pilgrimage route.</p>
+        <div style="display:flex; flex-direction:column; gap:6px; margin: 10px 0;">
+          ${cities.map(c => `
+            <div onclick="selectCity('${c}')"; style="padding:10px; border-radius:8px; cursor:pointer; background:${state.city === c ? 'var(--saffron-container)' : 'var(--ivory-variant)'}; font-weight:${state.city === c ? '700' : '500'}; color:${state.city === c ? 'var(--maroon-dark)' : 'var(--text-primary)'}; display:flex; justify-content:space-between;">
+              <span>${c}</span>
+              ${state.city === c ? '✓' : ''}
+            </div>
+          `).join('')}
+        </div>
+        <button class="btn-secondary" onclick="closeModal()">Close</button>
+      `;
+      openModal(html);
+    }
+
+    function selectCity(c) {
+      state.city = c;
+      document.getElementById('selectedCityText').innerText = c;
+      closeModal();
+      showToast('Filtered by ' + c);
+      renderScreen();
+    }
+
+    function openEnquiryModal(title, type) {
+      let html = `
+        <h3 style="font-size:16px; font-weight:800; color:var(--text-primary);">Enquiry & Pre-Registration</h3>
+        <p style="font-size:12px; color:var(--saffron-primary); font-weight:700;">${title} (${type})</p>
+        <div class="form-group">
+          <label class="form-label">Devotee / Contact Name *</label>
+          <input type="text" id="enqName" class="form-input" placeholder="e.g. Santosh Kadam" value="Santosh Kadam">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mobile Number *</label>
+          <input type="tel" id="enqPhone" class="form-input" placeholder="+91 98220 12345" value="+91 98220 12345">
+        </div>
+        <div style="display:flex; gap:8px;">
+          <div class="form-group" style="flex:1;">
+            <label class="form-label">Pilgrims Count</label>
+            <input type="number" id="enqCount" class="form-input" value="2">
+          </div>
+          <div class="form-group" style="flex:1;">
+            <label class="form-label">Target Date</label>
+            <input type="text" id="enqDate" class="form-input" value="July 2026">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Seva or Special Notes</label>
+          <input type="text" id="enqNotes" class="form-input" placeholder="e.g. Senior citizen beds, seva slot">
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:6px;">
+          <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+          <button class="btn-primary" onclick="submitEnquiry('${title}')">Submit Request</button>
+        </div>
+      `;
+      openModal(html);
+    }
+
+    function submitEnquiry(title) {
+      closeModal();
+      showToast('Enquiry submitted for ' + title + ' (Prototype local status)');
+    }
+
+    function openCreatePostModal() {
+      let html = `
+        <h3 style="font-size:16px; font-weight:800;">Share Devotional Moment</h3>
+        <p style="font-size:12px; color:var(--text-secondary);">Post photos, kirtan verses, and Dindi updates to the community feed.</p>
+        <div class="form-group">
+          <label class="form-label">Update in English *</label>
+          <textarea id="postEn" class="form-input" rows="2" placeholder="e.g. Harinaam kirtan in progress at Dive Ghat..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">मराठीत संदेश (Optional)</label>
+          <textarea id="postMr" class="form-input" rows="2" placeholder="उदा. माऊलींच्या गजरात वाटचाल सुरू..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Event Tag</label>
+          <input type="text" id="postTag" class="form-input" value="#AshadhiWari2026">
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:8px;">
+          <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+          <button class="btn-primary" onclick="submitPost()">Publish to Feed</button>
+        </div>
+      `;
+      openModal(html);
+    }
+
+    function submitPost() {
+      const en = document.getElementById('postEn').value;
+      const mr = document.getElementById('postMr').value;
+      const tag = document.getElementById('postTag').value;
+      if (!en) return;
+      posts.unshift({
+        id: 'p_' + Date.now(),
+        author: 'Santosh Kadam (You)',
+        role: state.role,
+        tag: tag || '#Wari2026',
+        likes: 1,
+        textEn: en,
+        textMr: mr || en,
+        photo: 'Devotee shared update & community photo'
+      });
+      closeModal();
+      showToast('Devotional post shared to community feed');
+      renderScreen();
+    }
+
+    function openBroadcastModal() {
+      let html = `
+        <h3 style="font-size:16px; font-weight:800; color:var(--urgent-red);">Broadcast Urgent Pilgrim Alert</h3>
+        <p style="font-size:12px; color:var(--text-secondary);">Send high-priority notification to walking pilgrims and devotees.</p>
+        <div class="form-group">
+          <label class="form-label">Headline *</label>
+          <input type="text" id="alertTitle" class="form-input" placeholder="e.g. Rain Shelter Open at Saswad">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Alert Message Details *</label>
+          <textarea id="alertMsg" class="form-input" rows="3" placeholder="Specify location, queue instructions, or health camp..."></textarea>
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:8px;">
+          <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+          <button class="btn-primary" style="background:var(--urgent-red);" onclick="submitBroadcast()">Broadcast Alert Now</button>
+        </div>
+      `;
+      openModal(html);
+    }
+
+    function submitBroadcast() {
+      const title = document.getElementById('alertTitle').value;
+      if (!title) return;
+      events[0].announcements.unshift({
+        title: title,
+        time: 'Just now',
+        urgent: true,
+        desc: document.getElementById('alertMsg').value || 'High priority broadcast.'
+      });
+      closeModal();
+      showToast('Urgent alert broadcasted to all pilgrims');
+      renderScreen();
+    }
+
+    // Render Logic
+    function renderScreen() {
+      const c = document.getElementById('screenContent');
+      let html = '';
+
+      // Sub-screens
+      if (state.subScreen === 'detail' && state.selectedEvent) {
+        const ev = state.selectedEvent;
+        const isSaved = state.savedEventIds.has(ev.id);
+        const isFollowed = state.followedOrgIds.has(ev.organizer);
+        html = `
+          <div style="display:flex; align-items:center; gap:8px; cursor:pointer;" onclick="state.subScreen=null; renderScreen();">
+            <span style="font-size:18px;">←</span>
+            <span style="font-weight:700; font-size:14px; color:var(--saffron-primary);">Back to Events</span>
+          </div>
+
+          <div class="card" style="border-top: 4px solid var(--saffron-primary);">
+            <div style="padding:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <span style="background:var(--maroon-primary); color:white; font-size:10px; font-weight:700; padding:2px 8px; border-radius:4px;">${ev.category}</span>
+                <span class="verified-badge">✓ Verified Trust</span>
+              </div>
+              <h2 style="font-size:18px; font-weight:800; color:var(--text-primary); margin-top:8px;">${ev.titleEn}</h2>
+              <h3 style="font-size:14px; color:var(--maroon-primary); font-weight:600;">${ev.titleMr}</h3>
+
+              <div style="margin:12px 0; border-top:1px solid #EAE3D9; padding-top:10px; display:flex; flex-direction:column; gap:6px; font-size:12px;">
+                <div>📅 <strong>Dates:</strong> ${ev.dates}</div>
+                <div>⏰ <strong>Timings:</strong> ${ev.timings}</div>
+                <div>📍 <strong>Venue:</strong> ${ev.venue}</div>
+                <div>🚩 <strong>Route / Marg:</strong> ${ev.address}</div>
+              </div>
+
+              <div style="display:flex; gap:8px;">
+                <button class="btn-primary" style="flex:1;" onclick="showToast('Launching GPS directions to ' + '${ev.venue}')">🗺️ Get Directions</button>
+                <button class="btn-secondary" style="flex:1;" onclick="showToast('Organizer Helpline: 1800-233-0000')">📞 Contact Desk</button>
+                <button class="btn-secondary" onclick="toggleSave('${ev.id}')">${isSaved ? '★ Saved' : '☆ Save'}</button>
+              </div>
+
+              ${ev.hasLive ? `
+                <button class="btn-primary" style="width:100%; margin-top:8px; background:var(--live-red);" onclick="switchTab('live')">
+                  🔴 Watch Authorized Live Darshan Feed
+                </button>
+              ` : ''}
+            </div>
+          </div>
+
+          <!-- Organizer -->
+          <div class="card" style="padding:12px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div style="font-size:10px; color:var(--text-secondary);">Organized By</div>
+              <div style="font-size:13px; font-weight:700; color:var(--text-primary);">${ev.organizer}</div>
+            </div>
+            <button class="pill-btn role-pill" onclick="toggleFollow('${ev.organizer}')">${isFollowed ? '✓ Following' : '+ Follow'}</button>
+          </div>
+
+          <!-- Description -->
+          <div class="card" style="padding:14px;">
+            <h4 style="font-size:14px; font-weight:700; margin-bottom:6px;">About Event / स्वरूप व माहिती</h4>
+            <p style="font-size:12px; line-height:1.5; color:var(--text-primary); margin-bottom:8px;">${ev.descEn}</p>
+            <p style="font-size:12px; line-height:1.5; color:var(--maroon-primary);">${ev.descMr}</p>
+          </div>
+
+          <!-- Announcements -->
+          ${ev.announcements.length ? `
+            <div class="section-title">📢 Official Sansthan Announcements</div>
+            ${ev.announcements.map(a => `
+              <div class="card" style="padding:12px; background:${a.urgent ? '#FFEBEE' : 'var(--ivory-variant)'}; border-left:4px solid ${a.urgent ? 'var(--urgent-red)' : 'var(--saffron-primary)'};">
+                <div style="display:flex; justify-content:space-between; font-weight:700; font-size:13px; color:${a.urgent ? 'var(--urgent-red)' : 'var(--text-primary)'};">
+                  <span>${a.title}</span>
+                  <span style="font-size:10px; color:var(--text-muted);">${a.time}</span>
+                </div>
+                <div style="font-size:11px; margin-top:4px;">${a.desc}</div>
+              </div>
+            `).join('')}
+          ` : ''}
+
+          <!-- Schedule -->
+          <div class="section-title">⏱️ Program & Ritual Schedule</div>
+          ${ev.schedule.map(s => `
+            <div class="card" style="padding:10px 12px; display:flex; gap:10px; align-items:center;">
+              <span style="background:var(--saffron-container); color:var(--maroon-dark); font-weight:700; font-size:11px; padding:4px 8px; border-radius:6px; min-width:68px; text-align:center;">${s.time}</span>
+              <div>
+                <div style="font-size:13px; font-weight:700;">${s.title}</div>
+                <div style="font-size:11px; color:var(--text-secondary);">${s.desc}</div>
+              </div>
+            </div>
+          `).join('')}
+        `;
+        c.innerHTML = html;
+        return;
+      }
+
+      if (state.subScreen === 'stayfood') {
+        html = `
+          <div style="display:flex; align-items:center; gap:8px; cursor:pointer;" onclick="state.subScreen=null; renderScreen();">
+            <span style="font-size:18px;">←</span>
+            <span style="font-weight:700; font-size:14px; color:var(--saffron-primary);">Back to Home</span>
+          </div>
+
+          <div style="display:flex; gap:8px;">
+            <button class="chip ${state.stayTab === 0 ? 'active' : ''}" style="flex:1;" onclick="state.stayTab=0; renderScreen();">🏨 Accommodations</button>
+            <button class="chip ${state.stayTab === 1 ? 'active' : ''}" style="flex:1;" onclick="state.stayTab=1; renderScreen();">🍲 Free Bhandara & Seva</button>
+          </div>
+
+          ${state.stayTab === 0 ? `
+            <div class="section-title">Dharamshalas, Ashrams & Pilgrim Bhakt Niwas</div>
+            ${accommodations.map(a => `
+              <div class="card" style="padding:14px;">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                  <div>
+                    <div style="font-size:14px; font-weight:800;">${a.name}</div>
+                    <div style="font-size:11px; color:var(--text-secondary);">${a.type}</div>
+                  </div>
+                  <span class="verified-badge">✓ Verified</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; margin:8px 0; font-size:12px;">
+                  <strong style="color:var(--maroon-primary);">${a.price}</strong>
+                  <span style="color:var(--verified-green); font-weight:700;">${a.beds} beds available</span>
+                </div>
+                <div style="display:flex; gap:4px; flex-wrap:wrap; margin-bottom:10px;">
+                  ${a.facilities.map(f => `<span style="background:var(--ivory-variant); font-size:9px; padding:2px 6px; border-radius:4px;">${f}</span>`).join('')}
+                </div>
+                <div style="display:flex; gap:8px;">
+                  <button class="btn-primary" style="flex:1;" onclick="openEnquiryModal('${a.name}', '${a.type}')">Enquire / Book Bed</button>
+                  <button class="btn-secondary" onclick="showToast('Helpline: ' + '${a.phone}')">📞 Call</button>
+                </div>
+              </div>
+            `).join('')}
+          ` : `
+            <div class="section-title">Free Mahaprasad, Bhandara & Emergency Seva</div>
+            ${foodServices.map(f => `
+              <div class="card" style="padding:14px;">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                  <div style="font-size:14px; font-weight:800;">${f.name}</div>
+                  <span style="background:${f.isFree ? '#E8F5E9' : 'var(--saffron-container)'}; color:${f.isFree ? 'var(--verified-green)' : 'var(--maroon-dark)'}; font-size:9px; font-weight:800; padding:2px 6px; border-radius:4px;">
+                    ${f.isFree ? 'FREE SEVA' : 'COMMERCIAL'}
+                  </span>
+                </div>
+                <div style="font-size:11px; color:var(--text-secondary); margin:4px 0;">${f.category} • Hours: ${f.hours}</div>
+                <div style="font-size:12px; margin-bottom:8px;">${f.desc}</div>
+                <button class="btn-secondary" style="width:100%;" onclick="showToast('Contact Desk: ' + '${f.phone}')">📞 Contact Help Desk (${f.phone})</button>
+              </div>
+            `).join('')}
+          `}
+        `;
+        c.innerHTML = html;
+        return;
+      }
+
+      if (state.subScreen === 'marketplace') {
+        html = `
+          <div style="display:flex; align-items:center; gap:8px; cursor:pointer;" onclick="state.subScreen=null; renderScreen();">
+            <span style="font-size:18px;">←</span>
+            <span style="font-weight:700; font-size:14px; color:var(--saffron-primary);">Back to Home</span>
+          </div>
+
+          <div style="display:flex; gap:8px;">
+            <button class="chip ${state.marketTab === 0 ? 'active' : ''}" style="flex:1;" onclick="state.marketTab=0; renderScreen();">🎪 Temporary Stalls</button>
+            <button class="chip ${state.marketTab === 1 ? 'active' : ''}" style="flex:1;" onclick="state.marketTab=1; renderScreen();">🛠️ Event Services</button>
+          </div>
+
+          ${state.marketTab === 0 ? `
+            <div class="section-title">Pilgrimage Stalls & Festival Paraphernalia</div>
+            ${vendors.map(v => `
+              <div class="card" style="padding:14px;">
+                <div style="display:flex; justify-content:space-between;">
+                  <div>
+                    <div style="font-size:14px; font-weight:800;">${v.name}</div>
+                    <div style="font-size:11px; color:var(--text-secondary);">${v.category} • ${v.stall}</div>
+                  </div>
+                  <span class="verified-badge">✓ Verified</span>
+                </div>
+                <div style="background:var(--saffron-container); color:var(--maroon-dark); font-size:11px; font-weight:700; padding:6px 10px; border-radius:6px; margin:8px 0;">
+                  🏷️ ${v.offer}
+                </div>
+                <div style="display:flex; gap:4px; flex-wrap:wrap; margin-bottom:10px;">
+                  ${v.items.map(it => `<span style="background:var(--ivory-variant); font-size:9px; padding:2px 6px; border-radius:4px;">${it}</span>`).join('')}
+                </div>
+                <button class="btn-primary" style="width:100%;" onclick="showToast('Calling ' + '${v.name}' + ' at ' + '${v.phone}')">📞 Contact Stall (${v.phone})</button>
+              </div>
+            `).join('')}
+          ` : `
+            <div class="section-title">Mandap, Sound, Lights & Production Providers</div>
+            ${serviceProviders.map(sp => `
+              <div class="card" style="padding:14px;">
+                <div style="display:flex; justify-content:space-between;">
+                  <div>
+                    <div style="font-size:14px; font-weight:800;">${sp.name}</div>
+                    <div style="font-size:11px; color:var(--text-secondary);">${sp.category}</div>
+                  </div>
+                  <span class="verified-badge">✓ Verified</span>
+                </div>
+                <div style="font-size:12px; margin:6px 0;">${sp.exp}</div>
+                <div style="font-size:12px; font-weight:700; color:var(--maroon-primary); margin-bottom:8px;">Estimate: ${sp.price}</div>
+                <button class="btn-primary" style="width:100%;" onclick="openEnquiryModal('${sp.name}', '${sp.category}')">Request Quotation</button>
+              </div>
+            `).join('')}
+          `}
+        `;
+        c.innerHTML = html;
+        return;
+      }
+
+      if (state.subScreen === 'social') {
+        html = `
+          <div style="display:flex; align-items:center; gap:8px; cursor:pointer;" onclick="state.subScreen=null; renderScreen();">
+            <span style="font-size:18px;">←</span>
+            <span style="font-weight:700; font-size:14px; color:var(--saffron-primary);">Back to Home</span>
+          </div>
+
+          <div class="card" style="padding:12px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div style="font-size:14px; font-weight:800;">Devotee & Mandal Feed</div>
+              <div style="font-size:11px; color:var(--text-secondary);">Share photos, kirtan verses, and Dindi seva</div>
+            </div>
+            <button class="btn-primary" onclick="openCreatePostModal()">+ Post</button>
+          </div>
+
+          ${posts.map(p => `
+            <div class="card" style="padding:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <div>
+                  <div style="font-size:13px; font-weight:800;">${p.author} <span class="verified-badge">✓</span></div>
+                  <div style="font-size:10px; color:var(--text-secondary);">${p.role}</div>
+                </div>
+                <span style="color:var(--saffron-primary); font-weight:700; font-size:11px;">${p.tag}</span>
+              </div>
+              <div style="font-size:12px; line-height:1.4; margin-bottom:6px;">${p.textEn}</div>
+              <div style="font-size:12px; line-height:1.4; color:var(--maroon-primary); margin-bottom:8px;">${p.textMr}</div>
+              <div style="background:#2C221B; color:white; padding:10px; border-radius:8px; font-size:11px; margin-bottom:8px;">
+                📷 <em>${p.photo}</em>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px;">
+                <button onclick="p.likes++; showToast('Jai Hari! Liked post'); renderScreen();" style="border:none; background:none; cursor:pointer; font-weight:700; color:var(--urgent-red);">
+                  ❤️ ${p.likes} Likes
+                </button>
+                <button onclick="showToast('Post link copied to clipboard')" style="border:none; background:none; cursor:pointer; color:var(--text-secondary);">
+                  ↗️ Share
+                </button>
+              </div>
+            </div>
+          `).join('')}
+        `;
+        c.innerHTML = html;
+        return;
+      }
+
+      if (state.subScreen === 'organizer') {
+        html = `
+          <div style="display:flex; align-items:center; gap:8px; cursor:pointer;" onclick="state.subScreen=null; renderScreen();">
+            <span style="font-size:18px;">←</span>
+            <span style="font-weight:700; font-size:14px; color:var(--saffron-primary);">Back to Home</span>
+          </div>
+
+          <div class="card" style="padding:14px; border-top:4px solid var(--saffron-primary);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:16px; font-weight:800;">Shri Vitthal Mandir & Sansthan Core</div>
+                <div style="font-size:11px; color:var(--text-secondary);">Registered Organization • ID: MH-PDR-1892</div>
+              </div>
+              <span class="verified-badge">✓ Official Sansthan</span>
+            </div>
+            <div style="display:flex; gap:8px; margin-top:12px;">
+              <button class="btn-primary" style="flex:1;" onclick="showToast('Event publishing form ready')">+ Publish Event</button>
+              <button class="btn-primary" style="flex:1; background:var(--urgent-red);" onclick="openBroadcastModal()">📢 Broadcast Alert</button>
+            </div>
+          </div>
+
+          <div class="section-title">Pilgrim Reach & Engagement</div>
+          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px;">
+            <div class="card" style="padding:10px; text-align:center;">
+              <div style="font-size:16px; font-weight:800; color:var(--saffron-primary);">184,200+</div>
+              <div style="font-size:9px; color:var(--text-secondary);">Devotees Reached</div>
+            </div>
+            <div class="card" style="padding:10px; text-align:center;">
+              <div style="font-size:16px; font-weight:800; color:var(--maroon-primary);">98,500</div>
+              <div style="font-size:9px; color:var(--text-secondary);">Live Stream Views</div>
+            </div>
+            <div class="card" style="padding:10px; text-align:center;">
+              <div style="font-size:16px; font-weight:800; color:var(--verified-green);">327</div>
+              <div style="font-size:9px; color:var(--text-secondary);">Dindis Managed</div>
+            </div>
+          </div>
+
+          <div class="section-title">Your Managed Events</div>
+          ${events.slice(0, 2).map(ev => `
+            <div class="card" style="padding:12px;">
+              <div style="display:flex; justify-content:space-between; font-weight:700; font-size:13px;">
+                <span>${ev.titleEn}</span>
+                <span style="color:var(--verified-green); font-size:10px;">ACTIVE</span>
+              </div>
+              <div style="font-size:11px; color:var(--text-secondary); margin:4px 0;">${ev.dates}</div>
+              <button class="btn-secondary" style="width:100%; margin-top:6px;" onclick="openBroadcastModal()">Send Urgent Alert to Devotees</button>
+            </div>
+          `).join('')}
+        `;
+        c.innerHTML = html;
+        return;
+      }
+
+      // Tab 1: Home
+      if (state.tab === 'home') {
+        html += `
+          <!-- APK Download Callout -->
+          <div class="apk-banner" onclick="window.location.href='/download-apk'">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:20px;">📱</span>
+              <div>
+                <div style="font-size:12px; font-weight:800;">Download Warkari Native Android APK</div>
+                <div style="font-size:10px; opacity:0.9;">Compiled debug APK (22 MB) • Ready to install on Android</div>
+              </div>
+            </div>
+            <span style="font-size:14px; font-weight:800;">Install ⇩</span>
+          </div>
+
+          <!-- Devotional Greeting Banner -->
+          <div class="card welcome-card">
+            <div class="welcome-icon">🚩</div>
+            <div>
+              <div style="font-size:13px; font-weight:800; color:var(--maroon-primary);">राम कृष्ण हरी • जय हरी विठ्ठल</div>
+              <div style="font-size:11px; color:var(--text-primary); margin-top:2px;">
+                Welcome to Warkari: Your Maharashtra pilgrimage & cultural festival companion.
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Streams Carousel -->
+          <div>
+            <div class="section-header">
+              <div class="section-title">
+                <span class="pulse-dot" style="background:var(--live-red); display:inline-block;"></span>
+                <span>Authorized Live Darshan</span>
+              </div>
+              <span class="section-link" onclick="switchTab('live')">See All (${liveStreams.length})</span>
+            </div>
+            <div class="carousel-row">
+              ${liveStreams.map(s => `
+                <div class="live-stream-card" onclick="state.selectedStreamId='${s.id}'; switchTab('live');">
+                  <div class="live-card-thumb">
+                    <span class="live-badge"><span class="pulse-dot"></span> LIVE</span>
+                    <div style="color:white; font-size:11px; font-weight:800; text-shadow:0 1px 3px rgba(0,0,0,0.8);">${s.temple}</div>
+                  </div>
+                  <div style="padding:8px;">
+                    <div style="font-size:11px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s.event}</div>
+                    <div style="font-size:10px; color:var(--text-secondary); margin-top:2px;">👁️ ${s.viewers.toLocaleString()} devotees</div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Quick Service Directory -->
+          <div>
+            <div class="section-title" style="margin-bottom:8px;">Pilgrim Services & Directory</div>
+            <div class="quick-service-grid">
+              <div class="service-btn" onclick="switchTab('map')">
+                <div class="icon-box" style="background:rgba(230,81,0,0.15); color:var(--saffron-primary);">📍</div>
+                <div class="title">Map Radar</div>
+                <div class="sub">Find Stops</div>
+              </div>
+              <div class="service-btn" onclick="state.subScreen='stayfood'; renderScreen();">
+                <div class="icon-box" style="background:rgba(122,20,26,0.15); color:var(--maroon-primary);">🏨</div>
+                <div class="title">Stay & Food</div>
+                <div class="sub">Dharamshala</div>
+              </div>
+              <div class="service-btn" onclick="state.subScreen='marketplace'; renderScreen();">
+                <div class="icon-box" style="background:rgba(46,125,50,0.15); color:var(--verified-green);">🎪</div>
+                <div class="title">Stalls</div>
+                <div class="sub">Puja Items</div>
+              </div>
+              <div class="service-btn" onclick="state.subScreen='social'; renderScreen();">
+                <div class="icon-box" style="background:rgba(109,33,79,0.15); color:#6D214F;">❤️</div>
+                <div class="title">Social Feed</div>
+                <div class="sub">Community</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Emergency Helplines -->
+          <div class="emergency-strip">
+            <span style="font-size:16px;">🚑</span>
+            <div>Emergency 24x7: Dial 108 (Ambulance) • 112 (Police) • 1800-233-0000 (Wari Desk)</div>
+          </div>
+
+          <!-- Upcoming Events -->
+          <div>
+            <div class="section-header">
+              <div class="section-title">Upcoming Cultural Events & Yatras</div>
+              <span class="section-link" onclick="switchTab('discover')">Explore All</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              ${events.map(ev => `
+                <div class="card event-card" onclick='openEventDetail(${JSON.stringify(ev)})'>
+                  <div class="event-banner" style="background:linear-gradient(135deg, ${ev.category.includes('Wari') ? 'var(--saffron-primary)' : 'var(--maroon-primary)'}, #231C16);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                      <span style="background:rgba(0,0,0,0.4); font-size:9px; font-weight:700; padding:2px 6px; border-radius:4px;">${ev.category}</span>
+                      <span onclick="event.stopPropagation(); toggleSave('${ev.id}')" style="font-size:16px; cursor:pointer;">
+                        ${state.savedEventIds.has(ev.id) ? '★' : '☆'}
+                      </span>
+                    </div>
+                    <div>
+                      <div style="font-size:9px; font-weight:700; color:var(--gold-accent); letter-spacing:1px;">${ev.city.toUpperCase()}</div>
+                      <div style="font-size:13px; font-weight:800;">${ev.titleEn}</div>
+                    </div>
+                  </div>
+                  <div class="event-card-body">
+                    <div style="font-size:11px; color:var(--text-secondary);">${ev.titleMr}</div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; font-size:11px;">
+                      <span>📅 ${ev.dates.split('–')[0]}</span>
+                      <span class="verified-badge">✓ ${ev.isVerified ? 'Verified' : 'Community'}</span>
+                    </div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Prototype Notice -->
+          <div class="prototype-notice">
+            <span>ℹ️</span>
+            <span>Warkari is a non-commercial prototype. Event schedules, live darshan feeds, and dharamshala records reflect authentic Maharashtra cultural events.</span>
+          </div>
+        `;
+      }
+
+      // Tab 2: Discover
+      else if (state.tab === 'discover') {
+        const categories = ['All Categories', 'Wari & Palkhi', 'Ganpati Mandal', 'Kumbh Mela'];
+        const filtered = events.filter(e => {
+          const matchQ = !state.searchQuery || e.titleEn.toLowerCase().includes(state.searchQuery.toLowerCase()) || e.venue.toLowerCase().includes(state.searchQuery.toLowerCase());
+          const matchCat = !state.selectedCategory || e.category === state.selectedCategory;
+          const matchV = !state.onlyVerified || e.isVerified;
+          return matchQ && matchCat && matchV;
+        });
+
+        html = `
+          <div class="card" style="padding:12px;">
+            <input type="text" class="form-input" style="width:100%;" placeholder="🔍 Search events, temples, mandals, dindis..." value="${state.searchQuery}" oninput="state.searchQuery=this.value; renderScreen();">
+            <div class="filter-chips-row" style="margin-top:10px;">
+              ${categories.map(cat => `
+                <button class="chip ${(state.selectedCategory === cat || (!state.selectedCategory && cat === 'All Categories')) ? 'active' : ''}" onclick="state.selectedCategory='${cat === 'All Categories' ? '' : cat}'; renderScreen();">${cat}</button>
+              `).join('')}
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; font-size:11px;">
+              <span>Showing ${filtered.length} events</span>
+              <label style="display:flex; align-items:center; gap:4px; cursor:pointer;">
+                <input type="checkbox" ${state.onlyVerified ? 'checked' : ''} onchange="state.onlyVerified=this.checked; renderScreen();"> Verified Only
+              </label>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            ${filtered.map(ev => `
+              <div class="card event-card" onclick='openEventDetail(${JSON.stringify(ev)})'>
+                <div class="event-banner" style="background:linear-gradient(135deg, ${ev.category.includes('Wari') ? 'var(--saffron-primary)' : 'var(--maroon-primary)'}, #231C16);">
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="background:rgba(0,0,0,0.4); font-size:9px; font-weight:700; padding:2px 6px; border-radius:4px;">${ev.category}</span>
+                    <span onclick="event.stopPropagation(); toggleSave('${ev.id}')" style="font-size:16px;">
+                      ${state.savedEventIds.has(ev.id) ? '★' : '☆'}
+                    </span>
+                  </div>
+                  <div>
+                    <div style="font-size:9px; font-weight:700; color:var(--gold-accent);">${ev.city.toUpperCase()}</div>
+                    <div style="font-size:13px; font-weight:800;">${ev.titleEn}</div>
+                  </div>
+                </div>
+                <div class="event-card-body">
+                  <div style="font-size:11px; color:var(--text-secondary);">${ev.venue}</div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px; font-size:11px;">
+                    <span>📅 ${ev.dates}</span>
+                    <span class="verified-badge">✓ Verified</span>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      // Tab 3: Map
+      else if (state.tab === 'map') {
+        const activeLoc = state.selectedLocation || locations[0];
+        html = `
+          <div class="card" style="padding:12px;">
+            <div class="section-title">Pilgrim Radar & Route Facilities</div>
+            <div style="font-size:11px; color:var(--text-secondary); margin-top:2px;">Live proximity finder for Bhandara, Dharamshalas, Medical and Water</div>
+          </div>
+
+          <!-- Radar Visual -->
+          <div class="radar-box">
+            <div class="radar-ring" style="width:70px; height:70px;"></div>
+            <div class="radar-ring" style="width:140px; height:140px;"></div>
+            <div class="radar-ring" style="width:210px; height:210px;"></div>
+            <div style="width:14px; height:14px; background:var(--saffron-primary); border-radius:50%; z-index:2; border:2px solid white;"></div>
+
+            <!-- Pins on radar -->
+            <div class="radar-pin ${activeLoc.id === 'l1' ? 'active' : ''}" style="top:25px; left:40px;" onclick="state.selectedLocation=locations[0]; renderScreen();">
+              🛕 Vitthal Mandir (0.4km)
+            </div>
+            <div class="radar-pin ${activeLoc.id === 'l2' ? 'active' : ''}" style="top:35px; right:30px;" onclick="state.selectedLocation=locations[1]; renderScreen();">
+              🍲 Bhandara (0.6km)
+            </div>
+            <div class="radar-pin ${activeLoc.id === 'l3' ? 'active' : ''}" style="bottom:30px; left:50px;" onclick="state.selectedLocation=locations[2]; renderScreen();">
+              🏨 Dharamshala (0.8km)
+            </div>
+            <div class="radar-pin ${activeLoc.id === 'l4' ? 'active' : ''}" style="bottom:25px; right:40px;" onclick="state.selectedLocation=locations[3]; renderScreen();">
+              🚑 108 Medical (1.2km)
+            </div>
+          </div>
+
+          <!-- Selected Location Card -->
+          <div class="card" style="padding:14px; border-top:3px solid var(--saffron-primary);">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+              <div>
+                <div style="font-size:15px; font-weight:800;">${activeLoc.nameEn}</div>
+                <div style="font-size:12px; color:var(--maroon-primary);">${activeLoc.nameMr}</div>
+              </div>
+              <span class="verified-badge">${activeLoc.isFree ? 'FREE SEVA' : 'FACILITY'}</span>
+            </div>
+            <div style="font-size:11px; color:var(--text-secondary); margin:6px 0;">
+              📍 ${activeLoc.address} • <strong>${activeLoc.distance}</strong> away
+            </div>
+            <div style="font-size:11px; margin-bottom:10px;">
+              Crowd Status: <strong style="color:${activeLoc.crowd.includes('High') ? 'var(--urgent-red)' : 'var(--verified-green)'};">${activeLoc.crowd}</strong>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button class="btn-primary" style="flex:1;" onclick="showToast('Getting GPS directions to ' + '${activeLoc.nameEn}')">🗺️ Get Directions</button>
+              <button class="btn-secondary" style="flex:1;" onclick="showToast('Calling Help Desk: ' + '${activeLoc.phone}')">📞 Call (${activeLoc.phone})</button>
+            </div>
+          </div>
+        `;
+      }
+
+      // Tab 4: Live
+      else if (state.tab === 'live') {
+        const activeStream = liveStreams.find(s => s.id === state.selectedStreamId) || liveStreams[0];
+        html = `
+          <div class="section-title">🔴 Authorized Live Darshan Feed</div>
+
+          <!-- Video Player Box -->
+          <div class="card" style="background:#0F0B08; color:white; overflow:hidden;">
+            <div style="height:210px; display:flex; flex-direction:column; justify-content:center; align-items:center; position:relative; background:radial-gradient(circle, #3D2314 0%, #0F0B08 80%);">
+              <div style="font-size:44px; margin-bottom:8px;">🕉️</div>
+              <div style="font-size:16px; font-weight:800; color:var(--gold-accent);">${activeStream.temple}</div>
+              <div style="font-size:12px; color:rgba(255,255,255,0.85);">${activeStream.event}</div>
+
+              <!-- Badges -->
+              <div style="position:absolute; top:10px; left:10px;" class="live-badge">
+                <span class="pulse-dot"></span> ${activeStream.isLive ? 'OFFICIAL LIVE' : 'UPCOMING'}
+              </div>
+              <div style="position:absolute; top:10px; right:10px; background:rgba(0,0,0,0.6); font-size:9px; padding:2px 6px; border-radius:4px;">
+                1080p HD
+              </div>
+              <div style="position:absolute; bottom:8px; left:10px; font-size:11px; color:rgba(255,255,255,0.8);">
+                👁️ ${activeStream.isLive ? activeStream.viewers.toLocaleString() + ' devotees watching' : 'Stream offline'}
+              </div>
+            </div>
+
+            <!-- Player Bar -->
+            <div style="background:#1F1713; padding:12px 14px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:10px; color:rgba(255,255,255,0.6);">Devotional Chant:</div>
+                <div style="font-size:13px; font-weight:800; color:var(--gold-accent);">${activeStream.chant}</div>
+              </div>
+              <button class="btn-primary" style="padding:6px 14px; font-size:12px;" onclick="state.chantCount++; showToast('राम कृष्ण हरी! Total chants: ' + state.chantCount); renderScreen();">
+                🙏 Chant (${state.chantCount})
+              </button>
+            </div>
+          </div>
+
+          <!-- Schedule -->
+          <div class="card" style="padding:12px;">
+            <div style="font-weight:700; font-size:13px; margin-bottom:4px;">Aarti & Darshan Ritual Timings</div>
+            <div style="font-size:11px; color:var(--maroon-primary);">${activeStream.schedule}</div>
+          </div>
+
+          <div class="section-title">Available Temple Streams</div>
+          ${liveStreams.map(s => `
+            <div class="card" style="padding:10px 12px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; border:${s.id === state.selectedStreamId ? '2px solid var(--saffron-primary)' : '1px solid #EAE3D9'};" onclick="state.selectedStreamId='${s.id}'; renderScreen();">
+              <div>
+                <div style="font-size:13px; font-weight:800;">${s.temple}</div>
+                <div style="font-size:11px; color:var(--text-secondary);">${s.event} • ${s.organizer}</div>
+              </div>
+              <span class="live-badge" style="background:${s.isLive ? 'var(--live-red)' : 'gray'};">${s.isLive ? 'LIVE' : 'OFFLINE'}</span>
+            </div>
+          `).join('')}
+        `;
+      }
+
+      // Tab 5: Profile
+      else if (state.tab === 'profile') {
+        html = `
+          <!-- User Profile Card -->
+          <div class="card" style="padding:16px; display:flex; gap:14px; align-items:center;">
+            <div class="om-badge" style="width:48px; height:48px; font-size:22px; background:var(--saffron-primary); color:white;">SK</div>
+            <div>
+              <div style="font-size:16px; font-weight:800;">Santosh Kadam</div>
+              <div style="font-size:12px; color:var(--text-secondary);">+91 98220 12345</div>
+              <span class="marathi-pill" style="margin-left:0; margin-top:4px; display:inline-block;">${state.role}</span>
+            </div>
+          </div>
+
+          <!-- Role Selector -->
+          <div class="card" style="padding:14px;">
+            <div style="font-size:14px; font-weight:800; margin-bottom:4px;">App Role / भूमिकेची निवड</div>
+            <div style="font-size:11px; color:var(--text-secondary); margin-bottom:10px;">Switch mode to access organizer dashboard or vendor listings.</div>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              ${['Devotee / Pilgrim', 'Organizer / Mandal', 'Local Vendor', 'Service Provider'].map(r => `
+                <div onclick="state.role='${r}'; if ('${r}'.includes('Organizer')) state.subScreen='organizer'; showToast('Switched to ${r}'); renderScreen();" style="padding:8px 10px; border-radius:6px; cursor:pointer; background:${state.role === r ? 'var(--saffron-container)' : 'var(--ivory-variant)'}; display:flex; justify-content:space-between; font-size:12px; font-weight:${state.role === r ? '700' : '500'};">
+                  <span>${r}</span>
+                  ${state.role === r ? '✓ Active' : ''}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Saved Events -->
+          <div class="card" style="padding:14px;">
+            <div style="font-size:14px; font-weight:800; margin-bottom:8px;">Saved Events (${state.savedEventIds.size})</div>
+            ${events.filter(e => state.savedEventIds.has(e.id)).map(e => `
+              <div onclick='openEventDetail(${JSON.stringify(e)})' style="padding:6px 0; border-bottom:1px solid #EAE3D9; cursor:pointer; display:flex; justify-content:space-between; font-size:12px;">
+                <span>★ ${e.titleEn}</span>
+                <span style="color:var(--saffron-primary);">View →</span>
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Emergency Helplines -->
+          <div class="card" style="padding:14px; background:#FFF8E1; border-color:var(--gold-accent);">
+            <div style="font-size:13px; font-weight:800; color:var(--maroon-primary); margin-bottom:6px;">Pilgrim Safety Helplines</div>
+            <div style="font-size:11px; line-height:1.6;">
+              <div>• <strong>108:</strong> Government Emergency Ambulance (24x7)</div>
+              <div>• <strong>112:</strong> Maharashtra Police Integrated Helpline</div>
+              <div>• <strong>1091:</strong> Women Pilgrim Safety Helpline</div>
+              <div>• <strong>1800-233-0000:</strong> Ashadhi Wari Pilgrim Control Room</div>
+            </div>
+          </div>
+
+          <div class="prototype-notice">
+            <span>🛡️</span>
+            <span>Privacy Commitment: Warkari respects devotee faith and does not require users to declare religious identity.</span>
+          </div>
+        `;
+      }
+
+      c.innerHTML = html;
+    }
+
+    // Initialize App
+    renderScreen();
+  </script>
+</body>
+</html>
